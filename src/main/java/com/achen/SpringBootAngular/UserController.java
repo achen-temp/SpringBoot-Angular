@@ -25,11 +25,6 @@ public class UserController {
     //Get Users by ID
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public User getUserbyId(@PathVariable("id") int id){
-        /*for(User user : this.users){
-            if(id == user.getId()){
-                return user;
-            }
-        }*/
         return this.users.stream().filter(
                 user -> user.getId() == id
         ).findFirst().orElse(null);
@@ -37,7 +32,7 @@ public class UserController {
 
     //save a new user
     @RequestMapping(method = RequestMethod.POST)
-    public void saveUser(@RequestBody User user){
+    public boolean saveUser(@RequestBody User user){
         //this passed in user does not contain id;
         if(this.users.size() == 0){
             user.setId(0);
@@ -48,11 +43,12 @@ public class UserController {
             user.setId(maxId+1);
         }
         this.users.add(user);
+        return true;
     }
 
     //update an existing user
     @RequestMapping(method = RequestMethod.PUT)
-    public void updateUser(@RequestBody User user){
+    public boolean updateUser(@RequestBody User user){
         //user hidden field id to find user and then update it
         //filter return reference
         User targetUser = this.users.stream().filter(target -> target.getId() == user.getId()).findFirst().orElse(null);
@@ -60,8 +56,9 @@ public class UserController {
             targetUser.setFirstName(user.getFirstName());
             targetUser.setLastName(user.getLastName());
             targetUser.setEmail(user.getEmail());
+            return true;
         }
-        return;
+        return false;
     }
 
     //delete an existing user by id

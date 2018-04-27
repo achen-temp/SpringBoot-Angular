@@ -1,0 +1,38 @@
+<div style="text-align: center">
+  <button (click)="getUsers()">Fetch Users</button>
+  <button (click)="createUser()">Create New User</button>
+  <br>
+  <br>
+
+  <!--Display all users-->
+  <div *ngFor="let user of users" style="text-align: center">
+    {{user.firstName}} || {{user.lastName}} || {{user.email}} <button (click)="onClickUpdate(user)">Update</button>  <button (click)="deleteUser(user)">Delete</button>
+  </div>
+
+  <br>
+  <br>
+
+  <!--Error Message-->
+  <div style="color:red">{{errorMsg}}</div>
+
+  <!--Create New User form-->
+  <div *ngIf="isCreateMode">
+    <form (ngSubmit)="submitUser(userForm)" #userForm="ngForm">
+      <input ngModel type="text" name="fname" placeholder="First Name" #fname><br>
+      <input ngModel type="text" name="lname" placeholder="Last Name" #lname><br>
+      <input ngModel type="text" name="email" placeholder="Email" #email><br>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <!--update user form-->
+  <div *ngIf="isUpdateMode">
+    <form (ngSubmit)="updateUser(updateForm)" #updateForm="ngForm">
+      <input [(ngModel)]="tobeUpdatedUser.firstName" type="text" name="fname"><br>
+      <input [(ngModel)]="tobeUpdatedUser.lastName" type="text" name="lname" placeholder="Last Name" #lname><br>
+      <input [(ngModel)]="tobeUpdatedUser.email" type="text" name="email" placeholder="Email" #email><br>
+      <button type="submit">Save</button>
+    </form>
+  </div>
+
+</div>
