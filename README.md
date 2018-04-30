@@ -22,3 +22,10 @@ to communicate between spring boot and angular, we need to setup proxy config
       },
 2. in app root folder, create proxy.conf.json file, remember the "pathRewrite"
 3. start angualr using: npm start
+
+# Deployment
+The ideal is to have to severs run separately. but most of the case, the user is using one server. Steps for 1 server scenarios
+1. in front-end "angular" folder, run "npm run build" to build angular project, the output will be in "dist" folder - as configured in "package.json"
+2. change pom.xml to include "mavn-war-plugin" in "build" block and set web resources to point to dist folder
+3. change pom.xml to package as "war" file
+4. run "mvn clean install"
